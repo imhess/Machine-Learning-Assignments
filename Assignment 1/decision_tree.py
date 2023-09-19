@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------
-# AUTHOR: your name
-# FILENAME: title of the source file
-# SPECIFICATION: description of the program
+# AUTHOR: Isaiah Hessler
+# FILENAME: decision_tree.py
+# SPECIFICATION: Complete the given python program (decision_tree.py) that will read the file contact_lens.csv and output a decision tree.
 # FOR: CS 4210- Assignment #1
 # TIME SPENT: how long it took you to complete the assignment
 #-----------------------------------------------------------*/
@@ -27,12 +27,41 @@ with open('contact_lens.csv', 'r') as csvfile:
 
 #transform the original categorical training features into numbers and add to the 4D array X. For instance Young = 1, Prepresbyopic = 2, Presbyopic = 3
 # so X = [[1, 1, 1, 1], [2, 2, 2, 2], ...]]
-#--> add your Python code here
-# X =
+for row in db:
+  temp = []
+  for j, value in enumerate(row):
+    print(j)
+    if j == 0:
+      if value == 'Young':
+        temp.append(1)
+      elif value == 'Prepresbyopic':
+        temp.append(2)
+      else:
+        temp.append(3)
+    if j == 1:
+      if value == 'Myope':
+        temp.append(1)
+      else:
+        temp.append(2)
+    if j == 2:
+      if value == 'No':
+        temp.append(1)
+      else:
+        temp.append(2)
+    if j == 3:
+      if value == 'Reduced':
+        temp.append(1)
+      else:
+        temp.append(2)
+  X.append(temp)
+print(X)
 
 #transform the original categorical training classes into numbers and add to the vector Y. For instance Yes = 1, No = 2, so Y = [1, 1, 2, 2, ...]
-#--> addd your Python code here
-# Y =
+for row in db:
+  if row[-1] == 'Yes':
+    Y.append(1)
+  else:
+    Y.append(2)
 
 #fitting the decision tree to the data
 clf = tree.DecisionTreeClassifier(criterion = 'entropy')

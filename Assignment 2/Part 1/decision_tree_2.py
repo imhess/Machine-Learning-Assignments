@@ -30,12 +30,41 @@ for ds in dataSets:
 
     #transform the original categorical training features to numbers and add to the 4D array X. For instance Young = 1, Prepresbyopic = 2, Presbyopic = 3
     # so X = [[1, 1, 1, 1], [2, 2, 2, 2], ...]]
-    #--> add your Python code here
-    # X =
+    for row in dbTraining:
+        temp = []
+        for j, value in enumerate(row):
+            print(j)
+            if j == 0:
+                if value == 'Young':
+                    temp.append(1)
+                elif value == 'Prepresbyopic':
+                    temp.append(2)
+                else:
+                    temp.append(3)
+            if j == 1:
+                if value == 'Myope':
+                    temp.append(1)
+                else:
+                    temp.append(2)
+            if j == 2:
+                if value == 'No':
+                    temp.append(1)
+                else:
+                    temp.append(2)
+            if j == 3:
+                if value == 'Reduced':
+                    temp.append(1)
+                else:
+                    temp.append(2)
+        X.append(temp)
+    print(X)
 
     #transform the original categorical training classes to numbers and add to the vector Y. For instance Yes = 1, No = 2, so Y = [1, 1, 2, 2, ...]
-    #--> add your Python code here
-    # Y =
+    for row in dbTraining:
+        if row[-1] == 'Yes':
+            Y.append(1)
+        else:
+            Y.append(2)
 
     #loop your training and test tasks 10 times here
     for i in range (10):

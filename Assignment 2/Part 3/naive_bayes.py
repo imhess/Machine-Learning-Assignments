@@ -5,7 +5,7 @@
 # weather_training.csv (training set) and output the classification of each test instance from the file
 # weather_test (test set) if the classification confidence is >= 0.75.
 # FOR: CS 4210- Assignment #2
-# TIME SPENT: 
+# TIME SPENT: 3 Hours
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH AS numpy OR pandas. You have to work here only with standard
@@ -19,7 +19,7 @@ train = []
 test = []
 
 #reading the training data in a csv file
-with open('C:\\Users\\thoma\\Documents\\GitHub\\Machine-Learning-Assignments\\Assignment 2\\Part 3\\weather_training.csv', 'r') as csvfile:
+with open('weather_training.csv', 'r') as csvfile:
   reader = csv.reader(csvfile)
   for i, row in enumerate(reader):
       if i > 0: #skipping the header
@@ -73,7 +73,7 @@ clf = GaussianNB()
 clf.fit(X, Y)
 
 #reading the test data in a csv file
-with open('C:\\Users\\thoma\\Documents\\GitHub\\Machine-Learning-Assignments\\Assignment 2\\Part 3\\weather_test.csv', 'r') as csvfile:
+with open('weather_test.csv', 'r') as csvfile:
   reader = csv.reader(csvfile)
   for i, row in enumerate(reader):
       if i > 0: #skipping the header
@@ -81,11 +81,64 @@ with open('C:\\Users\\thoma\\Documents\\GitHub\\Machine-Learning-Assignments\\As
       else:
         heading = row
 
+Xtest = []
+
+for row in test:
+  temp = []
+  temp.clear()
+  for j, value in enumerate(row):
+    if j == 1:
+      if value == 'Sunny':
+        temp.append(1) 
+      elif value == 'Overcast':
+        temp.append(2)
+      else:
+        temp.append(3)
+    if j == 2:
+      if value == 'Hot':
+        temp.append(1) 
+      elif value == 'Mild':
+        temp.append(2)
+      else:
+        temp.append(3)
+    if j == 3:
+      if value == 'High':
+        temp.append(1) 
+      else:
+        temp.append(2)
+    if j == 4:
+      if value == 'Strong':
+        temp.append(1) 
+      else:
+        temp.append(2)
+  Xtest.append(temp)
+
+longest = max(map(len, heading))
+
 #printing the header of the solution
 for label in heading:
-  print(label, end='  ')
+  print(label + (longest - len(label)) * " ", end="   ")
+print("Confidence")
 
 #use your test samples to make probabilistic predictions. For instance: clf.predict_proba([[3, 1, 2, 1]])[0]
-#--> add your Python code here
-
-
+#--> add your Python code
+#0 = yes, 1 = no
+counter = 0
+for features in Xtest:
+  prediction = []
+  prediction.clear()
+  prediction = clf.predict_proba([features])[0]
+  if prediction[0] > prediction[1] and prediction[0] >= 0.75:
+    for i, value in enumerate(test[0][:-1]):
+      print(test[counter][i] + (longest - len(test[counter][i])) * " ", end='   ')
+    print("Yes", end='            ')
+    print(prediction[0])
+    counter += 1
+  elif prediction[1] > prediction[0] and prediction[1] >= 0.75:
+    for i, value in enumerate(test[0][:-1]):
+      print(test[counter][i] + (longest - len(test[counter][i])) * " ", end='   ')
+    print("No", end='             ')
+    print(prediction[1])
+    counter += 1
+  else:
+    counter += 1

@@ -10,7 +10,7 @@
 # degree, kernel, and decision_function_shape) leads you to the best prediction performance. To test the
 # accuracy of those distinct models, you will use the file optdigits.tes (1,797 samples).
 # FOR: CS 4210- Assignment #3
-# TIME SPENT: 
+# TIME SPENT: 3 Hours
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: YOU HAVE TO WORK WITH THE PYTHON LIBRARIES numpy AND pandas to complete this code.
@@ -38,6 +38,8 @@ y_test = np.array(df.values)[:,-1] #getting the last field to create the class t
 
 #created 4 nested for loops that will iterate through the values of c, degree, kernel, and decision_function_shape
 
+highest_accuracy = 0
+
 for val in c:
     for d in degree:
         for k in kernel:
@@ -54,13 +56,25 @@ for val in c:
                 #hint: to iterate over two collections simultaneously, use zip()
                 #Example. for (x_testSample, y_testSample) in zip(X_test, y_test):
                 #to make a prediction do: clf.predict([x_testSample])
-                #--> add your Python code here
+                total = 0
+                correct = 0
+                counter = 0
                 for (x_testSample, y_testSample) in zip(X_test, y_test):
-                    print(clf.predict([x_testSample]))
+                    x_pred = clf.predict([x_testSample])
+                    if x_pred[0] == y_test[counter]:
+                        correct += 1
+                    total += 1
+                    counter += 1
+
 
                 #check if the calculated accuracy is higher than the previously one calculated. If so, update the highest accuracy and print it together
                 #with the SVM hyperparameters. Example: "Highest SVM accuracy so far: 0.92, Parameters: a=1, degree=2, kernel= poly, decision_function_shape = 'ovo'"
-                #--> add your Python code here
+                accuracy = (correct/total)
+
+                if accuracy > highest_accuracy:
+                    highest_accuracy = accuracy
+                    accuracy_rounded = round(highest_accuracy, 3)
+                    print(f'Highest SVM accuracy so far: {accuracy_rounded}, Parameters: a = {val}, degree = {d}, kernel = {k}, decision_function_shape = {f_s}')
 
 
 

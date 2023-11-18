@@ -64,14 +64,14 @@ l_rate = [0.01, 0.05, 0.1]
 
 for h in n_hidden:                          #looking or the best parameters w.r.t the number of hidden layers
     for n in n_neurons:                      #looking or the best parameters w.r.t the number of neurons
-        for r in l_rate:                  #looking or the best parameters w.r.t the learning rate
+        for l in l_rate:                  #looking or the best parameters w.r.t the learning rate
 
             #build the model for each combination by calling the function:
-            #model = build_model()
+            model = build_model()
             #-->add your Pyhton code here
 
             #To train the model
-            #history = model.fit(X_train, y_train, epochs=5, validation_data=(X_valid, y_valid))  #epochs = number times that the learning algorithm will work through the entire training dataset.
+            history = model.fit(X_train, y_train, epochs=5, validation_data=(X_valid, y_valid))  #epochs = number times that the learning algorithm will work through the entire training dataset.
             #-->add your Pyhton code here
 
             #Calculate the accuracy of this neural network and store its value if it is the highest so far. To make a prediction, do:

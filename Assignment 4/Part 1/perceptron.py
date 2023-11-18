@@ -32,20 +32,21 @@ df = pd.read_csv('optdigits.tes', sep=',', header=None) #reading the data by usi
 X_test = np.array(df.values)[:,:64]    #getting the first 64 fields to form the feature data for test
 y_test = np.array(df.values)[:,-1]     #getting the last field to form the class label for test
 
+algo_list = {Perceptron, MLPClassifier}
+
 for val in n: #iterates over n
 
     for bool in r: #iterates over r
 
-        #iterates over both algorithms
-        #-->add your Pyhton code here
+        #iterate over both algorithms
 
-        for : #iterates over the algorithms
+        for algo in algo_list: #iterates over the algorithms
 
             #Create a Neural Network classifier
-            #if Perceptron then
-            #   clf = Perceptron()    #use those hyperparameters: eta0 = learning rate, shuffle = shuffle the training data, max_iter=1000
-            #else:
-            #   clf = MLPClassifier() #use those hyperparameters: activation='logistic', learning_rate_init = learning rate,
+            if algo == Perceptron:
+               clf = Perceptron(eta0 = val, shuffle = bool, max_iter=1000)    #use those hyperparameters: eta0 = learning rate, shuffle = shuffle the training data, max_iter=1000
+            else:
+               clf = MLPClassifier(activation = 'logistic', learning_rate_init = val, hidden_layer_sizes = (25), shuffle = bool, max_iter = 1000) #use those hyperparameters: activation='logistic', learning_rate_init = learning rate,
             #                          hidden_layer_sizes = number of neurons in the ith hidden layer - use 1 hidden layer with 25 neurons,
             #                          shuffle = shuffle the training data, max_iter=1000
             #-->add your Pyhton code here

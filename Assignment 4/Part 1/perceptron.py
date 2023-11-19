@@ -22,31 +22,33 @@ import pandas as pd
 n = [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
 r = [True, False]
 
-df = pd.read_csv('optdigits.tra', sep=',', header=None) #reading the data by using Pandas library
+df = pd.read_csv('C:/Users/Isaiah/Documents/GitHub/Machine-Learning-Assignments/Assignment 4/Part 1/optdigits.tra', sep=',', header=None) #reading the data by using Pandas library
 
 X_training = np.array(df.values)[:,:64] #getting the first 64 fields to form the feature data for training
 y_training = np.array(df.values)[:,-1]  #getting the last field to form the class label for training
 
-df = pd.read_csv('optdigits.tes', sep=',', header=None) #reading the data by using Pandas library
+df = pd.read_csv('C:/Users/Isaiah/Documents/GitHub/Machine-Learning-Assignments/Assignment 4/Part 1/optdigits.tes', sep=',', header=None) #reading the data by using Pandas library
 
 X_test = np.array(df.values)[:,:64]    #getting the first 64 fields to form the feature data for test
 y_test = np.array(df.values)[:,-1]     #getting the last field to form the class label for test
 
 algo_list = {Perceptron, MLPClassifier}
 
+highest_accuracyM = 0
+highest_accuracyP = 0
+
 for val in n: #iterates over n
 
-    for bool in r: #iterates over r
+    for boo in r: #iterates over r
 
         #iterate over both algorithms
-
         for algo in algo_list: #iterates over the algorithms
 
             #Create a Neural Network classifier
             if algo == Perceptron:
-               clf = Perceptron(eta0 = val, shuffle = bool, max_iter=1000)    #use those hyperparameters: eta0 = learning rate, shuffle = shuffle the training data, max_iter=1000
+               clf = Perceptron(eta0 = val, shuffle = boo, max_iter=1000)    #use those hyperparameters: eta0 = learning rate, shuffle = shuffle the training data, max_iter=1000
             else:
-               clf = MLPClassifier(activation = 'logistic', learning_rate_init = val, hidden_layer_sizes = (25), shuffle = bool, max_iter = 1000) #use those hyperparameters: activation='logistic', learning_rate_init = learning rate,
+               clf = MLPClassifier(activation = 'logistic', learning_rate_init = val, hidden_layer_sizes = (25), shuffle = boo, max_iter = 1000) #use those hyperparameters: activation='logistic', learning_rate_init = learning rate,
             #                          hidden_layer_sizes = number of neurons in the ith hidden layer - use 1 hidden layer with 25 neurons,
             #                          shuffle = shuffle the training data, max_iter=1000
             #-->add your Pyhton code here
@@ -58,13 +60,33 @@ for val in n: #iterates over n
             #hint: to iterate over two collections simultaneously with zip() Example:
             #for (x_testSample, y_testSample) in zip(X_test, y_test):
             #to make a prediction do: clf.predict([x_testSample])
-            #--> add your Python code here
+            total = 0
+            correct = 0
+            counter = 0
+            for (x_testSample, y_testSample) in zip(X_test, y_test):
+               x_pred = clf.predict([x_testSample])
+               if x_pred[0] == y_test[counter]:
+                  correct += 1
+               total += 1
+               counter += 1
 
             #check if the calculated accuracy is higher than the previously one calculated for each classifier. If so, update the highest accuracy
             #and print it together with the network hyperparameters
             #Example: "Highest Perceptron accuracy so far: 0.88, Parameters: learning rate=0.01, shuffle=True"
             #Example: "Highest MLP accuracy so far: 0.90, Parameters: learning rate=0.02, shuffle=False"
-            #--> add your Python code here
+
+            if algo == Perceptron:
+               accuracyP = (correct/total)
+               if accuracyP > highest_accuracyP:
+                  highest_accuracyP = accuracyP
+                  accuracy_roundedP = round(highest_accuracyP, 3)
+                  print(f'Highest Perceptron accuracy so far: {accuracy_roundedP}, Parameters: learning rate = {n}, shuffle = {boo}')
+            else:
+               accuracyM = (correct/total)
+               if accuracyM > highest_accuracyM:
+                  highest_accuracyM = accuracyM
+                  accuracy_roundedM = round(highest_accuracyM, 3)
+                  print(f'Highest SVM accuracy so far: {accuracy_roundedM}, Parameters: learning rate = {n}, shuffle = {boo}')
 
 
 

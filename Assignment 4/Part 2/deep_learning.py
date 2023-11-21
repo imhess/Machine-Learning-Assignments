@@ -10,7 +10,7 @@
 # named build_model() to define the architectures of your neural networks. Finally, the weights of the
 # best model will be printed, together with the architecture and the learning curves
 # FOR: CS 4210- Assignment #4
-# TIME SPENT: 
+# TIME SPENT: 3 Hours
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: YOU CAN USE ANY PYTHON LIBRARY TO COMPLETE YOUR CODE.
